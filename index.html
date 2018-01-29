@@ -8,21 +8,38 @@
   <script src="script/pixi.min.js"></script>
 </head>
 <body>
-  <script type="text/javascript">
-    let type = "WebGL"
-    if(!PIXI.utils.isWebGLSupported()){
-      type = "canvas"
-    }
-
-    PIXI.utils.sayHello(type)
-  </script>
   <script>
+    //Aliases
+    let Application = PIXI.Application,
+      loader = PIXI.loader,
+      resources = PIXI.loader.resources,
+      Sprite = PIXI.Sprite;
+
     //Create a Pixi Application
-    let app = new PIXI.Application({width: 556, height: 556, antialias: true, transparent: false, resolution: 1});
+    let app = new Application({width: 556, height: 556, antialias: true, transparent: false, resolution: 1});
+
     //styling
     app.renderer.backgroundColor = 0x061639;
+
     //Add the canvas that Pixi automatically created for you to the HTML document
     document.body.appendChild(app.view);
+
+
+    //Loadin images
+    loader
+      .add([
+        "images/food.png",
+        "images/knight.png"
+      ])
+      .load(setup);
+
+      //This `setup` function will run when the image has loaded
+      function setup() {
+        //Create food sprite
+        let food = new Sprite(resources["images/food.png"].texture);
+        //Add food to the stage
+        app.stage.addChild(food);
+      }
   </script>
 
 </body>
