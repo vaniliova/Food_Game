@@ -13,6 +13,7 @@
     let Application = PIXI.Application,
       loader = PIXI.loader,
       resources = PIXI.loader.resources,
+      Rectangle = PIXI.Rectangle,
       Sprite = PIXI.Sprite;
 
     //Create a Pixi Application
@@ -27,18 +28,34 @@
 
     //Loadin images
     loader
-      .add([
-        "images/food.png",
-        "images/knight.png"
-      ])
+      .add("images/food.png")
       .load(setup);
 
       //This `setup` function will run when the image has loaded
       function setup() {
-        //Create food sprite
-        let food = new Sprite(resources["images/food.png"].texture);
-        //Add food to the stage
-        app.stage.addChild(food);
+        //Create the `tileset` sprite from the texture
+        let texture = PIXI.utils.TextureCache["images/food.png"];
+
+        //Create a rectangle object that defines the position and
+        //size of the sub-image you want to extract from the texture
+        //(`Rectangle` is an alias for `PIXI.Rectangle`)
+        let rectangle = new Rectangle(0, 0, 16, 16);
+
+        //Tell the texture to use that rectangular section
+        texture.frame = rectangle;
+
+        //Create the sprite from the texture
+        let cookie = new Sprite(texture);
+
+        //Position the cookie sprite on the canvas
+        cookie.x = 32;
+        cookie.y = 32;
+
+        //Add the rocket to the stage
+        app.stage.addChild(cookie);
+
+        //Render the stage
+        renderer.render(stage);
       }
   </script>
 
