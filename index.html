@@ -5,9 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="style/style.css">
   <script src="script/pixi.min.js"></script>
 </head>
 <body>
+
+  <div class="container">
+    <h1>Let's eat!</h1>
+    <p>Catch as many food as you can for higher score. If you miss ten products you loose!</p>
+  </div>
+
   <script>
     //Aliases
     let Application = PIXI.Application,
@@ -19,18 +26,13 @@
       Sprite = PIXI.Sprite;
 
     //Create a Pixi Application
-    let app = new Application({width: 556, height: 556, antialias: true, transparent: false, resolution: 1});
+    let app = new Application({width: 500, height: 500, antialias: true, transparent: false, resolution: 1});
 
     //styling
-    app.renderer.backgroundColor = 0x061639;
+    app.renderer.backgroundColor = 0x855623;
 
     //Add the canvas that Pixi automatically created for you to the HTML document
-    document.body.appendChild(app.view);
-
-    
-
-
-
+    document.querySelector('.container').appendChild(app.view);
 
     //Loadin images
     loader
@@ -41,23 +43,40 @@
 
       //This `setup` function will run when the image has loaded
       function setup() {
+
+        //Create an array for every Sprite
+        let allSprites = [];
+        let xAxis = 0;
+        let yAxis = 0;
         //Create the `tileset` sprite from the texture
         let texture = PIXI.utils.TextureCache["images/food.png"];
+
+        for (var i = 0; i < 8; i++) {
+          for (var j = 0; j < 8; j++) {
+            let rectangle = new Rectangle(yAxis, xAxis, 16, 16);
+            xAxis += 16;
+            allSprites.push(rectangle);
+          }
+          xAxis = 0;
+          yAxis += 16;
+        }
+
+        console.log(allSprites);
 
         //Create a rectangle object that defines the position and
         //size of the sub-image you want to extract from the texture
         //(`Rectangle` is an alias for `PIXI.Rectangle`)
-        let rectangle = new Rectangle(0, 0, 16, 16);
+        // let rectangle = new Rectangle(0, 0, 16, 16);
 
         //Tell the texture to use that rectangular section
-        texture.frame = rectangle;
+        texture.frame = allSprites[63];
 
         //Create the sprite from the texture
         cookie = new Sprite(texture);
 
         //Position the cookie sprite on the canvas
         cookie.x = 20;
-        cookie.y = -16;
+        cookie.y = 16;
 
         cookie.vx = 0;
         cookie.vy = 0;

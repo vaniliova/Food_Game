@@ -1,0 +1,19 @@
+body {
+  background-image: url('../images/foodbg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.container {
+  width: 600px;
+  height: 680px;
+  margin: 0 auto;
+  text-align: center;
+  background: rgba(133, 86, 35, .7);
+  color: white;
+}
+
+.container h1 {
+  font-size: 40px;
+  padding-top: 20px;
+}
