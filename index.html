@@ -39,7 +39,7 @@
       .add("images/food.png")
       .load(setup);
 
-      let cookie;
+      let foodItem;
 
       //This `setup` function will run when the image has loaded
       function setup() {
@@ -63,42 +63,45 @@
 
         console.log(allSprites);
 
-        //Create a rectangle object that defines the position and
-        //size of the sub-image you want to extract from the texture
-        //(`Rectangle` is an alias for `PIXI.Rectangle`)
-        // let rectangle = new Rectangle(0, 0, 16, 16);
+        //Losowanie foodItem i wyświetlanie w interwale
 
+         let interval = setInterval(function(){
+          //Create the sprite from the texture
+          foodItem = new Sprite(texture);
+
+          //Losowanie pozycji startowej foodItem
+          let positionX;
+          positionX = Math.floor((Math.random() * 483) + 1);
+          foodItem.x = positionX;
+          foodItem.y = -16;
+
+          foodItem.vx = 0;
+          foodItem.vy = 0;
+
+          //Add the cookie to the stage
+          app.stage.addChild(foodItem);
+
+          //Start the game loop
+          app.ticker.add(delta => gameLoop(delta));
+
+          //Render the stage
+          app.renderer.render(stage);
+
+        }, 3000);
+
+        let randFood = Math.floor((Math.random() * 63) + 0);;
         //Tell the texture to use that rectangular section
-        texture.frame = allSprites[63];
-
-        //Create the sprite from the texture
-        cookie = new Sprite(texture);
-
-        //Position the cookie sprite on the canvas
-        cookie.x = 20;
-        cookie.y = 16;
-
-        cookie.vx = 0;
-        cookie.vy = 0;
-
-        //Add the cookie to the stage
-        app.stage.addChild(cookie);
-
-        //Start the game loop
-        app.ticker.add(delta => gameLoop(delta));
-
-        //Render the stage
-        renderer.render(stage);
+        texture.frame = allSprites[randFood];
       }
 
       function gameLoop(delta){
 
         //Move the cookie 1 pixel
-        // cookie.vx += 1;
-        cookie.vy += 1;
+        foodItem.vx += 0;
+        foodItem.vy += 10;
 
         // cookie.x += cookie.vx;
-        cookie.y += cookie.vy;
+        foodItem.y += foodItem.vy + delta;
 
 
         //Optionally use the `delta` value
