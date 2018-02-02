@@ -14,6 +14,8 @@
       loader = PIXI.loader,
       resources = PIXI.loader.resources,
       Rectangle = PIXI.Rectangle,
+      TextureCache = PIXI.utils.TextureCache,
+      Container = PIXI.Container,
       Sprite = PIXI.Sprite;
 
     //Create a Pixi Application
@@ -25,11 +27,17 @@
     //Add the canvas that Pixi automatically created for you to the HTML document
     document.body.appendChild(app.view);
 
+    
+
+
+
 
     //Loadin images
     loader
       .add("images/food.png")
       .load(setup);
+
+      let cookie;
 
       //This `setup` function will run when the image has loaded
       function setup() {
@@ -45,17 +53,37 @@
         texture.frame = rectangle;
 
         //Create the sprite from the texture
-        let cookie = new Sprite(texture);
+        cookie = new Sprite(texture);
 
         //Position the cookie sprite on the canvas
-        cookie.x = 32;
-        cookie.y = 32;
+        cookie.x = 20;
+        cookie.y = -16;
 
-        //Add the rocket to the stage
+        cookie.vx = 0;
+        cookie.vy = 0;
+
+        //Add the cookie to the stage
         app.stage.addChild(cookie);
+
+        //Start the game loop
+        app.ticker.add(delta => gameLoop(delta));
 
         //Render the stage
         renderer.render(stage);
+      }
+
+      function gameLoop(delta){
+
+        //Move the cookie 1 pixel
+        // cookie.vx += 1;
+        cookie.vy += 1;
+
+        // cookie.x += cookie.vx;
+        cookie.y += cookie.vy;
+
+
+        //Optionally use the `delta` value
+        //cat.x += 1 + delta;
       }
   </script>
 
